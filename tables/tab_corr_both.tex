@@ -1,0 +1,48 @@
+\begin{table}[t]
+\centering
+\caption{\label{tab:corr_both}Correlation for different features considering all aggregation metrics and success parameters (V:\@ votes, R:\@ ratings, G:\@ gross). 
+}
+%%\vspace{.5 cm}
+\begin{subtable}[b]{\textwidth}
+ \caption{\label{tab:corr_squarec} \textbf{Features generated from square clustering}}
+\centering
+\begin{tabular}{@{}lrrrrrrrrr@{}}
+\toprule
+\multirow{2}{*}{Aggregator}
+& \multicolumn{3}{@{}c@{}}{Distance Corr.} & \multicolumn{3}{c}{Spearman} & \multicolumn{3}{c}{Pearson} \\
+\cmidrule(r){2-4} \cmidrule(l){5-7} \cmidrule(l){8-10}
+ & \multicolumn{1}{c}{V} & \multicolumn{1}{c}{R} & \multicolumn{1}{c}{G} &
+\multicolumn{1}{c}{V} & \multicolumn{1}{c}{R} & \multicolumn{1}{c}{G} & \multicolumn{1}{c}{V} & \multicolumn{1}{c}{R} & \multicolumn{1}{c}{G}  \\ \midrule
+Std. Deviation & $~.24$ & $~.08$ & $~.16$ & $-.23$  & $~.06$  & $-.19$ & $-.23$ & $.07$ & $-.14$ \\
+Contraction    & $.17$  & $.10$  & $.08$  & $-.33$  & $.13 $  & $-.13$ & $-.13$ & $.06$ & $-.06$ \\
+Maximum        & $.26$  & $.10$  & $.16$  & $-.34$  & $.13 $  & $-.20$ & $-.26$ & $.09$ & $-.15$ \\
+Minimum        & $.23$  & $.14$  & $.07$  & $-.37$  & $.19 $  & $-.10$ & $-.15$ & $.08$ & $-.04$ \\
+Mean           & $.27$  & $.10$  & $.17$  & $-.38$  & $.15 $  & $-.23$ & $-.26$ & $.09$ & $-.16$ \\
+Median         & $.26$  & $.10$  & $.17$  & $-.40$  & $.15 $  & $-.20$ & $-.25$ & $.08$ & $-.16$ \\
+Harmonic Mean  & $.26$  & $.13$  & $.12$  & $-.40$  & $.16 $  & $-.23$ & $-.20$ & $.10$ & $-.08$ \\ \bottomrule
+\end{tabular}
+\end{subtable}
+
+\vspace{6pt}
+
+\begin{subtable}[b]{\textwidth}
+ \caption{\label{tab:corr_noverlap} \textbf{Features generated from neighbor overlap}}
+\centering
+\begin{tabular}{@{}lrrrrrrrrr@{}}
+\toprule
+\multirow{2}{*}{Aggregator}
+& \multicolumn{3}{@{}c@{}}{Distance Corr.} & \multicolumn{3}{c}{Spearman} & \multicolumn{3}{c}{Pearson} \\
+\cmidrule(r){2-4} \cmidrule(l){5-7} \cmidrule(l){8-10}
+ & \multicolumn{1}{c}{V} & \multicolumn{1}{c}{R} & \multicolumn{1}{c}{G} &
+\multicolumn{1}{c}{V} & \multicolumn{1}{c}{R} & \multicolumn{1}{c}{G} & \multicolumn{1}{c}{V} & \multicolumn{1}{c}{R} & \multicolumn{1}{c}{G}  \\ \midrule
+Std. Deviation  & $~.09$  & $~.13$  & $~.16$  & $~.04$  & $-.12 $  & $-.17$ & $.06$ & $-.12$ & $-.15$ \\
+Maximum        & $.11$  & $.13$  & $.13$  & $.12$  & $-.14 $  & $-.14$ & $.12$ & $-.13$ & $-.13$ \\
+Midrange       & $.09$  & $.10$  & $.16$  & $.02$  & $-.08 $  & $-.18$ & $.05$ & $-.80$ & $-.16$ \\
+Minimum        & $.21$  & $.09$  & $.15$  & $-.18$  & $.06 $  & $-.14$ & $-.18$ & $.07$ & $-.13$ \\
+Mean           & $.19$  & $.06$  & $.25$  & $-.15$  & $.00 $  & $-.25$ & $-.15$ & $.00$ & $-.24$ \\
+Median         & $.19$  & $.05$  & $.23$  & $-.13$  & $.01 $  & $-.21$ & $-.17$ & $.02$ & $-.23$ \\
+Harmonic Mean  & $.24$  & $.09$  & $.22$  & $-.24$  & $.09 $  & $-.20$ & $-.24$ & $.08$ & $-.21$ \\ \bottomrule
+\end{tabular}
+\end{subtable}
+
+\end{table}

@@ -1,0 +1,53 @@
+\begin{table}[h]
+\caption{\label{tab:features}All 121 features considered in the experiment.}
+
+\begin{subtable}[b]{\textwidth}
+\caption{\textbf{Features obtained via aggregation}}
+\centering
+\begin{tabular}{@{}llcc@{}} \toprule
+Feature Type & Metric Name & \xcell{Number of\\Aggregations} & \xcell{ Number of\\ Features} \\ \midrule
+\multirow{10}{*}{\xcell{Ego\\Metrics}} & Closeness  & 7 & \multirow{10}{*}{70}    \\
+        & Betweenness  &  7  &         \\
+        & Clustering   & 7   &         \\
+        & Square clustering & 7 &      \\
+        & Degree                     & 7                          &                         \\
+                        & Net.\ constraint           & 7                          &                         \\
+                        & Prev.\ rating              & 7                          &                         \\
+                        & Prev.\ gross               & 7                          &                         \\
+                        & Prev.\ votes               & 7                          &                         \\
+                        & Prev.\ experience          & 7                          &                         \\ \midrule
+\multirow{3}{*}{\xcell{Pairwise\\Metrics}} & Past experience            & 6                          & \multirow{3}{*}{18}     \\
+                        & Shared friends             & 6                          &                         \\
+                        & Neighbour overlap          & 6                          &                         \\ \bottomrule
+\end{tabular}
+\end{subtable}
+
+\vspace{6pt}
+
+\begin{subtable}[b]{\textwidth}
+\caption{\textbf{Features obtained via One-Hot Encoding}}
+\centering
+\begin{tabular}{@{}llcc@{}} \toprule
+Feature Type             & Characteristic                & \xcell{Number of\\Groups}   & \xcell{Number of\\Features}          \\ \midrule
+\multirow{2}{*}{\xcell{Movie\\Characteristics}}  & Genres                     & 21                         & \multirow{2}{*}{27}     \\
+                        & Continents                 & 6                          &                         \\ \bottomrule
+\end{tabular}
+\end{subtable}
+
+\vspace{6pt}
+
+\begin{subtable}[b]{\textwidth}
+\caption{\textbf{Simple Features}}
+\centering
+\begin{tabular}{@{}llcc@{}} \toprule
+Feature Type             & \multicolumn{2}{l}{Feature Name}                          & \xcell{Number of\\Features}           \\ \midrule
+\multirow{3}{*}{\xcell{Global\\Metrics}} & \multicolumn{2}{l}{Global clustering coefficient}                    & \multirow{3}{*}{3}      \\
+                        & \multicolumn{2}{l}{Average path length}                          &                         \\
+                        & \multicolumn{2}{l}{Small world coefficient}                          &                         \\ \midrule
+\multirow{3}{*}{\xcell{Movie\\Characteristics}}   & \multicolumn{2}{l}{Runtime in minutes}    &    \multirow{3}{*}{3}   \\
+    & \multicolumn{2}{l}{Production team size}  &            \\
+    & \multicolumn{2}{l}{Production budget (normalized)}  &    \\
+\bottomrule
+\end{tabular}
+\end{subtable}
+\end{table}

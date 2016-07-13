@@ -1,0 +1,32 @@
+\definecolor{Gray}{gray}{0.85}
+\newcolumntype{a}{>{\columncolor{Gray}}r}
+\newcolumntype{b}{>{\columncolor{Gray}}c}
+
+\begin{table}[tb]
+\caption{\label{tab:years_results_super}Coefficient of determination ($R^2$) and
+confidence intervals for a significance level of $95\%$ obtained with a
+Bayesian Ridge regression. It shows the best results obtained only using
+pré-release information side by side with results obtained when also using
+other of the movie's success parameters as new features.} 
+\centering
+\begin{tabular}{lccr}
+\toprule
+Target                  & Years      & Without extra features    & With extra features \\
+\midrule
+\multirow{3}{*}{Votes}
+& 2008--2013   & $.556$, {\tiny $\pm$}$.0008$ & $.670$, {\tiny $\pm$}$.0007$ \\
+& 2000--2013   & $.517$, {\tiny $\pm$}$.0004$ & $.687$, {\tiny $\pm$}$.0004$ \\
+& 1990--2013   & $.464$, {\tiny $\pm$}$.0003$ & $.669$, {\tiny $\pm$}$.0004$ \\
+\midrule
+\multirow{3}{*}{Gross}
+& 2008--2013   & $.448$, {\tiny $\pm$}$.0009$ & $.574$, {\tiny $\pm$}$.0009$ \\
+& 2000--2013   & $.447$, {\tiny $\pm$}$.0004$ & $.613$, {\tiny $\pm$}$.0006$ \\
+& 1990--2013   & $.435$, {\tiny $\pm$}$.0003$ & $.614$, {\tiny $\pm$}$.0005$ \\
+\midrule
+\multirow{3}{*}{Rating}
+& 2008--2013   & $.281$, {\tiny $\pm$}$.0012$ & $.438$, {\tiny $\pm$}$.0014$ \\
+& 2000--2013   & $.273$, {\tiny $\pm$}$.0006$ & $.479$, {\tiny $\pm$}$.0007$ \\
+& 1990--2013   & $.262$, {\tiny $\pm$}$.0005$ & $.480$, {\tiny $\pm$}$.0006$ \\
+\bottomrule
+\end{tabular}
+\end{table}

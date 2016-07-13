@@ -1,0 +1,74 @@
+% Based on ppgcc commented version by Mirella Moro (2012), ppgccufmg 1.44.
+\documentclass[msc]{ppgccufmg}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[square]{natbib}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{type1ec}
+\usepackage{amsfonts}
+\usepackage{url}
+\usepackage{booktabs, multicol, multirow}
+\usepackage{import}
+\usepackage[ruled]{algorithm2e}
+\usepackage{color}
+\usepackage{leqno}
+\usepackage{enumitem}
+\usepackage{balance}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{natbib}
+\usepackage{xcolor,colortbl}
+\usepackage{float}
+\usepackage[a4paper,
+  english,
+  bookmarks=true,
+  bookmarksnumbered=true,
+  linktocpage,
+  colorlinks,
+  citecolor=black,
+  urlcolor=black,
+  linkcolor=black,
+  filecolor=black,
+  ]{hyperref}
+
+\usepackage{hyphenat}
+\hyphenation{ou-tros es-co-lham}
+
+\input{macros}
+\sloppy
+\begin{document}
+
+\ppgccufmg{
+  title={Predicting Team Success Using Social Topology},
+  authorrev={Ferreira Filho, Wladston},
+  cutter={X0000x},
+  cdu={000.0*00.00},
+  university={Federal University of Minas Gerais},
+  course={Computer Science},
+  portuguesetitle={Previsão de sucesso de times utilizando topologia social},
+  portugueseuniversity={Universidade Federal de Minas Gerais},
+  portuguesecourse={Ciência da Computação},
+  address={Belo Horizonte},
+  date={2015-12}, % chktex 8
+  keywords={Social Networks, Team Formation, Regression analysis, Success Prediction},
+  advisor={Mirella Moura Moro},
+  coadvisor={Ana Paula Couto da Silva},
+  %approval={img/approvalsheet.eps},
+  abstract=[brazil]{Resumo}{extras/resumo},
+  abstract={Abstract}{extras/abstract},
+  %abstract=[brazil]{Resumo Estendido}{extras/resumoest},
+  dedication={extras/dedication},
+  ack={extras/acknowledgments},
+  epigraphtext={Do. Or do not. There is no try.}{Master Yoda},
+}
+\subimport{chapters/intro/}{intro} 
+\subimport{chapters/fundamentals/}{fundamentals}
+\subimport{chapters/related/}{related}
+\subimport{chapters/model/}{model}
+\subimport{chapters/analysis/}{analysis}
+\subimport{chapters/conclusion/}{conclusion}
+\ppgccbibliography{bibfile}
+\end{document}

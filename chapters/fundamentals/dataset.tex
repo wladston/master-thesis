@@ -1,0 +1,47 @@
+\section{The IMDb Dataset}
+\label{sec:foundamentals:dataset}
+The IMDb, an US-based company owned by Amazon.com, provides free access to its
+famous dataset of cinema, TV movies and series for research purposes at its
+website:~\url{http://www.imdb.com/interfaces}. IMDb's data is modularly grouped
+by information type (such as ``business'', ``biography'', ``plot''). Each data
+module is provided in a compressed CSV (Comma Separated Values) text file.
+Hence, reconstructing the required parts of the original dataset requires only
+a subset of the data modules.
+
+The original dataset can be built as a SQL database from its constituent
+data-modules using the \texttt{imdbpy2sql} script, available from the IMDbPY
+tool\footnote{IMDbPY\@: \url{http://imdbpy.sourceforge.net/}}. This software
+includes many features for accessing and querying the built SQL database.
+
+The IMDb dataset describes movies and their full cast and crew in extensive
+detail, including movie alternate names, associated keywords, references to
+other movies, gross (revenue), box office, runtime in minutes,
+genres\footnote{One or more out of 21 possible genres can be assigned to a
+movie. The complete IMDb genre list is available at
+\url{http://www.imdb.com/genre/}.}, plot, production budget, audio and color
+schemes, production countries and certificate ratings for various
+countries\footnote{Each country has a legal entity responsible for issuing
+movie certificates. In the United States, it is the MPAA (Motion Picture
+Association of America:~\url{http://www.mpaa.org/film-ratings/}).}. It also
+contains extra information about the companies that worked in several aspects
+of the movie such as special effects, sound mix and distribution. It lists
+movie producers, writers, directors, editors, soundtrack composers, actors and
+actresses, makeup personal, and even stunt actors. For each of these people,
+more information such as full name, short biography, birth date, birth city and
+height is sometimes available.
+
+Anyone can register at IMDb and vote for any title in the database by grading
+it in a scale of [1--10] once. IMDb datasets also include movie
+\textit{ratings} as weighted averages of all votes\footnote{Ratings are
+different from \textit{reviews}, which are more elaborate opinions provided by
+registered users.} and the absolute number of \textit{votes} movies received.
+Most movies in the IMDb database are from virtually unknown productions, i.e.\@
+they received very little or no user ratings and reviews. More than half the
+movies in the database received less than 30 votes, whereas all professionally
+produced movies typically receive several thousands \textit{votes}.
+
+Here, the full IMDb dataset was downloaded in November 2014. At that
+time, it contained information of movies from the late 1800's to 2014, from all
+over the world, totalling approximately 1.4~gigabytes of data. Movies
+from 2014 were recently added to the dataset, and could have missing or
+unstable data. Therefore, movies from 2014 were not considered.

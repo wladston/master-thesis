@@ -1,0 +1,45 @@
+\section{Movie Success Prediction Model}
+\label{sec:model:prediction}
+In this section, we present the regression model chosen for experimentation
+and provide a general overview of the proposed prediction model.
+
+The movie success prediction task can be formally defined as follows. Consider
+the set of movies $\mathbb{M}$ as the feature length movies for cinema with at
+least one producer connected to the giant component (as defined in
+Section~\ref{sec:filter}). Each movie $m \in \mathbb{M}$ has a set of features
+$\mathbb{F}$, and each feature $f \in \mathbb{F}$ provides information about
+$m$. For each success parameter (gross, votes and rating), the problem lies in
+adjusting all $k$ coefficients of a linear combination of all $f$ features in
+such way that this linear combination best fits the success parameter being
+modeled considering all movies in $\mathbb{M}$. Such fitting of coefficients is
+performed by a regression model, which estimates the relationship between the
+features and each parameter.
+
+Overall, we consider a set of 121 features spanned over three main aspects of
+movies: characteristics of a motion picture itself, topological characteristics
+from its production team, and the team's past success and experience
+(Section~\ref{sec:features}). As for~\cite{Ghiassi2015}, our model only uses
+features available \textit{before} the movie release and thus may be used to
+make predictions (see Algorithm~\ref{algo:predictor} in
+Chapter~\ref{chapter:analysis})
+
+We rely on a multivariate Bayesian Ridge regression model to predict each movie
+success parameters described in Section~\ref{sec:success}. This is a linear
+regression model that uses Bayesian Inference and is similar to the Ridge
+regression model. This regression model is well described in the literature
+(Chapter~\ref{chapter:fundamentals}). It was chosen because it better handles
+features with lots of noise (i.e., considerable unexplained variation is
+observed when modeling the data). Two other regression algorithms were also
+tried: the Support Vector Regression (SVR) and the Ordinary Least Squares (OLS,
+Section~\ref{sec:ml}). However, comparing the resulting coefficients of
+determination ($R^2$) shows the Bayesian Ridge regression model outperforms
+them both.
+
+Most linear regression techniques, including the one used in this study, work
+best when their input features and target features are normalized and scaled to
+the same magnitude. Therefore, all of our features are normalized, as well as
+our target variables. There are two major techniques to achieve this. The first
+is scaling the values to fit within the [0, 1] interval. The second is to
+transform the data so that its mean equals zero and variance equals one.  Both
+normalization techniques were attempted, and zero-one scaling provided better
+results.

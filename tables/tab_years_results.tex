@@ -1,0 +1,28 @@
+\definecolor{Gray}{gray}{0.85}
+\newcolumntype{a}{>{\columncolor{Gray}}r}
+\newcolumntype{b}{>{\columncolor{Gray}}c}
+
+\begin{table}[tb]
+\caption{\label{tab:years_results}Coefficient of determination ($R^2$) and
+confidence intervals for a significance level of $95\%$ obtained with a
+Bayesian Ridge regression for different configurations of year range of the
+dataset, and features employed in the regression.}
+\centering
+\begin{tabular}{lcccba}
+\toprule
+Target                  & Years      & Non Topol.    & Topologic & All & Gain \\
+\midrule
+\multirow{3}{*}{Votes}  & 2008--2013   & $.529$, {\tiny $\pm$}$.0008$ & $.310$, {\tiny $\pm$}$.0006$ & $.556$, {\tiny $\pm$}$.0008$ & $5.10\%$ \\
+                        & 2000--2013   & $.484$, {\tiny $\pm$}$.0004$ & $.294$, {\tiny $\pm$}$.0005$ & $.517$, {\tiny $\pm$}$.0004$ & $6.82\%$ \\
+                        & 1990--2013   & $.437$, {\tiny $\pm$}$.0003$ & $.246$, {\tiny $\pm$}$.0004$ & $.464$, {\tiny $\pm$}$.0003$ & $6.18\%$ \\
+\midrule
+\multirow{3}{*}{Gross}  & 2008--2013   & $.431$, {\tiny $\pm$}$.0008$ & $.170$, {\tiny $\pm$}$.0013$ & $.448$, {\tiny $\pm$}$.0009$ & $3.94\%$ \\
+                        & 2000--2013   & $.419$, {\tiny $\pm$}$.0004$ & $.175$, {\tiny $\pm$}$.0005$ & $.447$, {\tiny $\pm$}$.0004$ & $6.68\%$ \\
+                        & 1990--2013   & $.392$, {\tiny $\pm$}$.0004$ & $.174$, {\tiny $\pm$}$.0004$ & $.435$, {\tiny $\pm$}$.0003$ & $10.97\%$ \\
+\midrule
+\multirow{3}{*}{Rating} & 2008--2013   & $.271$, {\tiny $\pm$}$.0011$ & $.033$, {\tiny $\pm$}$.0009$ & $.281$, {\tiny $\pm$}$.0012$ & $3.69\%$ \\
+                        & 2000--2013   & $.267$, {\tiny $\pm$}$.0006$ & $.038$, {\tiny $\pm$}$.0003$ & $.273$, {\tiny $\pm$}$.0006$ & $3.37\%$ \\
+                        & 1990--2013   & $.258$, {\tiny $\pm$}$.0004$ & $.031$, {\tiny $\pm$}$.0003$ & $.262$, {\tiny $\pm$}$.0005$ & $1.55\%$ \\
+\bottomrule
+\end{tabular}
+\end{table}

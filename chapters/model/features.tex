@@ -1,0 +1,106 @@
+\section{Defining Features for Movies}
+\label{sec:features}
+
+This section presents the features extracted from each movie, which can be
+divided into two main groups: features related to characteristics from the
+movie producing team and features related to the movie itself.
+Table~\ref{tab:features} presents an overview of all features.
+
+\input{../../tables/tab_features}
+
+\subsection{From Movie Characteristics}
+We include 32 features that are unrelated to social characteristics from the
+movie production team composition: the movie's genres, production countries,
+runtime length, and the global state of the interaction graph model
+(Section~\ref{sec:fundamentals:social}) at the time of the movie's release.
+These characteristics have also been previously explored to predict movie
+success~\citep{Ghiassi2015} and influence~\citep{wasserman2015cross}.  Next, we
+describe the methodology for extracting these features.
+
+Movie genre is categorical data: the IMDb dataset may assign one or more genres
+to movies. Therefore, we used 21 binary features to represent this categorical
+data, each one representing whether the movie belongs to a specific genre.
+
+The IMDb dataset also provides a list of countries associated with the
+production of a movie. Since there are about 200 different countries, it is not
+efficient to encode country production into features directly. Therefore, the
+UN list for countries and continents was used to transform the movie's list of
+related countries into this list of related ``geographic regions'': Africa,
+Asia, Europe, Latin America, North America and Oceania. Again, binary features
+were used, each encoding whether any country of the given continent took part
+in producing the movie. We note that movies can be jointly produced by teams in
+different countries, or by teams residing in a single country.
+
+Runtime length and production team size are directly represented as integer
+features. Runtimes range from 40 minutes to 450
+minutes\footnote{``S\'at\'antang\'o'' by B\'ela Tarr (1994) has a runtime of
+432 minutes.}. Production team sizes range from 2 to 19\footnote{Production
+team of ``Knuckleball!'' (2012).}.
+
+Finally, we calculate topological characteristics concerning the state of the
+whole network (following~\cite{uzzi2005collaboration}): its clustering
+coefficient, the average path length, and its small world coefficient.
+
+\subsection{From Movie Production Teams}
+Here, we present features derived from the set of social characteristics and
+past history from movie producing teams, which are based on the aspects
+presented in Table~\ref{tab:team_metrics}. In addition to each producer's track
+record, the table contains well known topological metrics regarding social
+network analysis, which capture different social aspects of nodes in a social
+network graph.
+
+We consider six topological ego-metrics (closeness, betweenness, clustering,
+square clustering, degree, and network constraint) and two pairwise-metrics
+(shared friends and neighbor overlap). These metrics are defined for singular
+nodes or pairs of nodes, and there is no standard methodology for extracting
+such topological information from sets of two or more nodes that constitute a
+team. To address this problem, we aggregate topological information from nodes
+in teams in two different ways: (\textit{i}) we aggregate values from metrics
+calculated from single nodes (or pairs of nodes) in the team, and (\textit{ii})
+we temporarily contract all nodes from the team into a single node (using node
+contraction, Chapter~\ref{sec:fundamentals:social}) and calculate metrics in
+the contracted node\footnote{Node contraction cannot be used with pair-wise
+metrics, since it aggregates all information into a single node}.
+
+In the first approach, aggregating the different metric values in a single way
+(e.g., considering only the simple mean of the values) is prone to information
+loss, since many distinct distributions can have the same mean value.
+Therefore, in addition to the mean, five other statistical aggregation
+functions are used. This way, more information about the distribution of the
+values is preserved. The seven methods for statistical and non-statistical
+aggregation are briefly presented in Table~\ref{tab:agg}.
+
+Moreover, we consider three global metrics to get the network state at time of
+movie release: the global clustering coefficient, the average path length and
+the small world coefficient. Hence, we consider 57 topological features (six
+ego-metrics aggregated in seven ways, two pairwise metrics aggregated in six
+ways, plus three global ones).
+
+\input{../../tables/tab_team_metrics}
+
+\input{../../tables/tab_agg}
+
+The node's track record is given by four measures related to its past success
+and experience (average previous rating, gross, votes and number of previously
+produced movies) and one pairwise metric (number of movies previously jointly
+produced by the pair). The former may be grouped by using the seven
+aforementioned aggregation techniques, yielding 28 features. The latter may be
+grouped by the six mathematical aggregation functions, generating six more
+features. At the end, this part considers 34 features.
+
+With these characteristics, we capture a complete composition of the team into
+numerical and analytical features, such as: 
+
+\begin{itemize}
+\item whether they are composed of amateurs, experienced producers, or mixed,
+by looking at the teams' past experience metric, aggregate in terms of
+mean, minimum, maximum and standard deviation;
+\item whether there is a producer who has had a spectacular track record in the
+team, by looking at the teams' previous success metric, aggregated in terms of
+mean and harmonic mean;
+\item whether the team has a central position in the whole network, by looking
+at team's betweenness metric, aggregated using the team's \textit{supernode};
+\item whether they are strongly or weakly connected to other producers in the
+industry, by looking at the degree and network constraint metrics,
+aggregated by team's \textit{supernode}.
+\end{itemize}

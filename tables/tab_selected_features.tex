@@ -1,0 +1,54 @@
+\bgroup\def\arraystretch{1.2}
+\begin{table*}[!t]
+\caption{\label{tab:selected_features}Set of features selected to be used in the regression model. The topological features are listed last.} 
+\centering
+\small
+\begin{tabular}{@{}p{2.0cm} p{3.75cm} >{\centering}p{2.9cm}@{} p{5.8cm}@{}}
+\toprule
+\parbox[t]{1.6cm}{Based on}  & \parbox[t]{3.05cm}{Feature Type} & \parbox[t]{2.9cm}{\# of features} & Description \\
+\midrule
+Genre               & Binary            & 9                  &  One for each of the genres:
+                                                              ``Romance'', ``Comedy'', ``Horror'', ``Adventure'',
+                                                              ``Thriller'', ``Mistery'', ``Drama'', ``Action'' and ``Documentary''. \\
+Continent           & Binary            & 3                  & Binary features for each of the continents: Africa, Europe, North America. \\
+Runtime             & Integer           & 1                  & Movie's runtime in minutes. \\
+Budget              & Log Transform     & 1                  & The logarithm of the movie's budget adjusted adjusted to present US Dollars. \\
+Previous success    & \parbox[t]{4.1cm}{
+                      Ego-metric
+                      aggregation:\\
+                      node contraction} & 2                  & Mean ratings and mean votes for movies previously
+                                                              produced by one or more agents. \\
+Previous success    & \parbox[t]{4.1cm}{
+                      Ego-metric
+                      aggregation:\\
+                      mean}              & 2                  & Mean of node's past productions gross and number of votes. \\
+
+Previous experience & \parbox[t]{4.1cm}{
+                      Ego-metric
+                      aggregation:\\
+                      node contraction} & 1                  & Number of production previously made by one or more agents
+                                                              from the team. \\
+
+\addlinespace[2.ex]
+%\multicolumn{4}{@{}l}{\textit{Topological Features}}   \\
+\multicolumn{2}{c}{\textit{Topological Features}}   \\
+\addlinespace[2.ex] %\midrule
+Degree              & \parbox[t]{4.1cm}{
+                     Ego-metric
+                     aggregation:\\
+                     node contraction}  & 1                  & Number of distinct peers from nodes, disregarding nodes in the
+                                                              team being analyzed. \\
+                                                              team being analyzed. \\
+Team Size           & Simple Feature    & 1                  & Number of nodes in the current team. \\
+Closeness           & \parbox[t]{4.1cm}{
+                      Ego-metric
+                      aggregation:\\
+                      median}           & 1                  & Median of closeness metric for nodes in the team. \\
+Clustering          & \parbox[t]{4.1cm}{
+                      Ego-metric
+                      aggregation:\\
+                      harmonic mean}    & 1                  & Harmonic mean of clustering coefficient for nodes in the team.\\
+\bottomrule
+\end{tabular}
+\end{table*}
+\egroup{}

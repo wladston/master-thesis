@@ -1,0 +1,95 @@
+\section{Social Network Analysis}
+\label{sec:fundamentals:social}
+
+\textit{Social Network Analysis} (SNA) emerged in the 20th century through the
+combination of network and graph theories as a fundamental approach to
+understanding social structures. SNA inherits from \textit{graph theory} the
+description of these structures as sets of \textit{nodes} connected by
+\textit{ties} (or \textit{edges}). SNA typically involves different metrics to
+evaluate \textit{connections}, \textit{distributions} and \textit{segmentation}
+of a given network.
+
+Metrics can be calculated from a node in the network, or from the network as a
+whole, to quantitatively characterize network aspects. For instance, centrality
+metrics such as closeness (introduced by~\cite{bavelas}) and betweenness
+(introduced by~\cite{anthonisse1971rush}) could capture the importance or
+relevance of the node in the graph. Social metrics providing information that
+is related only to a single node are referred to as \textit{ego-metrics}. Node
+clustering metrics \citep{Holland01051971} and network constraints
+\citep{Burt04} could indicate how heterogeneous the pool of connections of the
+node is and thus its access to new information. Node degree (i.e., the number
+of ties connecting it to other nodes) indicates how large the network of a node
+is, possibly indicating the amount of support the node receives in its
+productions.
+
+Besides these \textit{ego-metrics}, there are those to characterize the nature
+of the relationship between a pair of nodes. For instance, the \textit{number
+of shared neighbours} is the number of nodes to which both nodes in the pair
+are connected, whereas the \textit{neighborhood overlap} is the ratio of the
+number of shared friends to all nodes connected to the pair. These metrics
+provide an indication of how socially close nodes in a pair are.
+
+Finally, there are network metrics that refer to characteristics of the
+networks as a whole. Important metrics of this type include the
+\textit{clustering coefficient} (measures the degree to which nodes in the
+network tend to cluster) and the \textit{average shortest path length} (the
+average of the shortest path lengths between all possible pairs of nodes in the
+graph). The \textit{small world coefficient} is the ratio of the global
+clustering coefficient to the average shortest path length. This measure is
+related to the connectivity and cohesion among elements in a network. The more
+a network exhibits characteristics of a small world, the more connected the
+agents are to each other and connected to agents who know each other through
+past collaborations~\citep{uzzi2005collaboration}.
+
+Networks represented in graphs can be one-mode, with all nodes in the network
+of the same type, or two-mode, with two distinct types of nodes. Two-mode
+networks in which no ties exist connecting nodes from the same type (i.e., all
+ties connect two nodes from distinct types) are \textit{bipartite networks}.
+For instance, a bipartite graph can represent an online bulletin board in
+which nodes are either users or discussions topics, and ties exist only between
+users and topics to indicate whether a user participated in a topic. A very
+famous class of two-mode networks are \textit{collaboration networks}, in which
+one type of node represents human made artifacts (books, research papers,
+movies, Broadway musicals) and the other represents people who worked in
+creating the artifact. The network studied here is a two-mode network in which
+nodes are either movies or movie producers, and edges indicate that a movie
+producer worked in a movie.
+
+It is also possible to transform a two-mode network into a one-mode
+network~\cite{newman2003structure}. In this method, one type of node is chosen
+and a new network is created only with the chosen type of node. In the new
+(projected) network, ties are created between nodes that are connected to a
+common node in the original network. For collaboration networks, when
+projecting the original network for the authors, the projected network
+represents authors with ties linking authors that worked together.
+
+Two-mode networks, such as collaboration networks, are rarely analyzed without
+prior transformation into one-mode networks, because the network metrics are
+not defined for or adapted to two-mode networks. However, projected networks
+always lose information from the original network, and calculating social
+metrics from projected networks requires special attention.
+
+For instance, clustering coefficients from projected one-mode networks can be
+numerically high only due to the two-mode nature inherent to the original
+network. For accurately obtaining the network measures from a bipartite
+network, a more complex analysis considers random graphs, as described by
+\cite{newman2003structure}. Also, a new clustering technique, called squared
+clustering, was developed by~\cite{lind2005cycles} to better identify the
+clustering effect in networks projected from bipartite networks. These
+techniques (comparison to analog random graphs and square clustering) are used
+in the present work in order to extract social information more accurately.
+
+Most measures in bipartite networks are for single nodes. However, we need
+network measurements from \textit{teams}, which are groups of nodes. In these
+cases, one possible approach is node contraction: a group of nodes is replaced
+by a newly created single node~\citep{gross2005graph, west2001introduction}.
+Edges reaching the initial nodes then reach the new node. If there exist
+multiple edges from the same origin reaching the new node, they are combined
+into a new single edge. In this case, the new edge has the sum of the weights
+of the previous edges. Extra information (such as past success and experience)
+carried by the individual nodes and edges which are now combined can be joined
+into the created node or edge. Finally, all the aforementioned ego-based
+metrics can be calculated on such a \textit{supernode}. Note that the node
+contraction technique cannot be used for aggregating pair-wise metrics among
+all pairs in a group of nodes, since it aggregates all information into a
+single node.

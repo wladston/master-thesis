@@ -1,0 +1,33 @@
+\subsection{Final Considerations}
+\label{sec:an:final}
+In this chapter, we have confirmed that it is indeed possible to predict
+success by considering only data available \textit{before} the movie is
+released. Also, considering a large dataset for the prediction task is good;
+however, spanning it through many years may negatively affect the quality of
+the regression models. Finally, for all cases, the prediction model with
+topological features combined with past success and experience have
+outperformed the others, confirming this work main hypothesis.
+
+Besides identifying the most relevant features, it is also important to assess
+their \textit{strength} by evaluating their coefficients in the regression
+model. Note that features with a higher coefficient have more impact in the
+predicted value. Hence, we take an already trained regression model (the one
+for votes, whose fitting was the best among the three parameters) and sort its
+coefficients in descending magnitude. The coefficients with the highest
+magnitudes are: the team's mean previous gross, mean previous experience, the
+harmonic mean of clustering coefficients, contracted degree, genres Drama and
+Documentaries, runtime and continent Africa. 
+
+Out of all topological features, the impact of the \textit{clustering
+coefficient} and \textit{degree} are significantly higher than the others
+(their actual values are informed in the illustrative samples on the hits and
+misses analyzes in Section~\ref{sec:hitsmisses}). Also, teams with more ties to
+producers outside the current team are more likely to succeed, as are teams
+with the lowest levels of clustering coefficients. These indicate that more
+homogeneous teams tend to perform worse. In other words, this is a very
+important result and suggests that assembling heterogeneous teams with many
+\textit{external connections} is key in forming a team with higher success
+odds. It is important to notice that such results reinforce the theory of weak
+ties (or structural holes) that determine the importance of having nodes acting
+as \textit{bridges} within a successful
+network~\citep{Burt04,burt2005brokerage,newman2001structure}.

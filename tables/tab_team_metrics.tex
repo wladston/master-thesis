@@ -1,0 +1,68 @@
+\begin{table}[H]
+\centering
+\caption{\label{tab:team_metrics}Summary of all metrics used for team characterization.}
+
+\begin{subtable}[b]{\textwidth}
+\caption{\textbf{Ego metrics}}
+\centering
+\begin{tabular}{@{}p{3cm}@{} p{12.0cm}@{}}
+%\toprule
+%\multicolumn{2}{@{}l}{\textbf{Ego metrics}}\\
+\toprule
+Closeness & Captures how close a producer $p_k$ is from all other producers reachable from it in $\mathbb{G}_\mathbb{P}$.\\
+\midrule
+Betweenness & Fraction of all shortest paths, computed using breadth-first search, connecting pairs of producers that pass through a particular producer $p_k$.\\
+\midrule
+Clustering & Fraction of pairs of producer $p_k$ collaborators who have also collaborated with one another.\\
+\midrule
+\parbox[t]{2.5cm}{Square \\ clustering} & Fraction of possible cycles of size 4 that exist at the node~\citep{lind2005cycles}.\\
+\midrule
+\parbox[t]{2.5cm}{Network \\ constrain} & Index measuring the extent of the bridiging of the node (whether the node connects different clusters~\citep{burt2005brokerage}).\\
+\midrule
+Degree & Total number of partners of a producer $p_k$.\\
+\midrule
+\parbox[t]{2.5cm}{Past \\ experience} & Number of prior movies produced by the node.\\
+\midrule
+\parbox[t]{2.5cm}{Previous \\ success} & Mean success metrics for prior movies produced by the node, defined for all three success parameters extracted from movies.\\
+\bottomrule
+\end{tabular}
+\end{subtable}
+
+\vspace{6pt}
+
+\begin{subtable}[b]{\textwidth}
+\caption{\textbf{Pair-wise metrics}}
+\centering
+%\addlinespace[2.5ex]
+%\multicolumn{2}{@{}l}{\textbf{Pair-wise metrics}}   \\
+\begin{tabular}{@{}p{3cm}@{} p{12.0cm}@{}}
+\toprule
+\parbox[t]{2.5cm}{Shared \\ friends} & Number of nodes connected to both nodes in the pair.\\
+\midrule
+\parbox[t]{2.5cm}{Neighbour \\ overlap} & Rate of shared friends and total nodes connected to the pair. \\
+\midrule
+\parbox[t]{2.5cm}{Shared \\ experience} & Number of prior movies jointly produced by the pair of nodes. \\
+\bottomrule
+\end{tabular}
+\end{subtable}
+
+\vspace{6pt}
+
+\begin{subtable}[b]{\textwidth}
+\caption{\textbf{Global team and graph metrics}}
+\centering
+\begin{tabular}{@{}p{3cm}@{} p{12.0cm}@{}}
+
+%\addlinespace[2.5ex]
+%\multicolumn{2}{@{}l}{\textbf{Global team and graph metrics}} \\
+\toprule
+\parbox[t]{2.5cm}{Global \\ clustering} & Measure of degree to which the producers in $\mathbb{G}_\mathbb{P}$ tend to cluster together.\\
+\midrule
+\parbox[t]{2.5cm}{Average\\ shortest path} & Average across all values of shortest path for all pairs of producers in $\mathbb{G}_\mathbb{P}$.\\
+\midrule
+\parbox[t]{2.5cm}{Team Size} & The total size of full production team.\\
+\bottomrule
+\end{tabular}
+\end{subtable}
+
+\end{table}

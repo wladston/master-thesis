@@ -1,0 +1,306 @@
+\section{Dataset Processing}
+\label{sec:dataset_interpret}
+This section presents all pre-processing steps necessary to extract the proper
+information required for our analysis. We present the network model and 
+strategies for filtering irrelevant information from the dataset, as well as
+extracting and normalizing movie success parameters. We then group the movies
+into three performance groups and present a characterization for the adjusted
+success parameters and performance groups.
+
+\subsection{Network Model}
+Assessing topological information from movie production teams requires to build
+a graph for modeling the interaction network of movie producing agents as
+accurately as possible. Specifically, we construct a graph for movie producers
+only, leaving out the rest of the crew and cast (actors, directors, writers,
+etc.). The reason is that producers are the \textit{core} of the team: they
+make the most important decisions and hire the rest of the crew, ultimately
+claiming most responsibility for the success of the movie.  Furthermore, adding
+more types of agents to the model would make it orders of magnitude larger,
+exceeding the computing power available and possibly adding uncertainty to the
+results~\citep{COSN2014-cost1,elberse2007power,COSN2014-cost2}.
+
+As discussed in Section~\ref{sec:fundamentals:social}, most
+network measures are only defined for one-mode networks, so our network model
+cannot be directly based on a bipartite network. As presented in
+Section~\ref{sec:foundamentals:dataset}, IMDb provides co-production data from
+movies that is directly mappable to a bipartite collaboration network.
+Therefore, one initial step in pre-processing the IMDb dataset is to derive an
+one-mode network from it. To this end, we employ the methodology proposed
+by~\cite{newman2001scientific}.
+
+Formally, given a set of movies $\mathbb{M}$, each movie $m \in \mathbb{M}$ has
+a set of producers $\mathbb{P}_m$ (also called $m$'s production team). All
+producers $p \in \mathbb{P}_m$ are connected nodes in a graph
+$\mathbb{G}_\mathbb{P}$, which aggregates all producers of all movies in
+$\mathbb{M}$. Moreover, edges in $\mathbb{G}_\mathbb{P}$ are undirected and
+link producers who have worked together in one or more movie. The number of
+previous collaborations between two producers is expressed by a weight value in
+the edge connecting them. For every node $p$, $H_p$ is $p$'s past experience
+(i.e.\@ the number of $p$'s previous productions), and $S_p$ is $p$'s previous
+success (i.e.\@ the mean of success parameters for $p$'s movies). Finally,
+$\mathbb{G}_\mathbb{P}$ evolves over time to incorporate new data when new
+movies are produced. Therefore, $\mathbb{G}_\mathbb{P}(t)$ represents the
+connections among producers considering only movies that were released up to
+instant $t$.
+
+For any given movie $m$, its characteristics are based on the topology from the
+subset of nodes in $\mathbb{P}_m$. For assessing $m$'s characteristics, the
+graph is set to the state of the movie's release date; hence, whatever happened
+after the movie's production does not affect its features. This is achieved by
+processing movies in chronological order. By doing so, once a movie is
+processed, the graph only contains information from the already processed,
+previously released movies.
+
+Besides edges and nodes, an auxiliary data structure is annexed to $\mathbb{G}$
+to accommodate necessary non-topological information from movies. As presented
+in Section~\ref{sec:foundamentals:dataset}, the IMDb dataset provides an
+incredibly rich pool of information, including collaboration data from
+producing agents. Some of this auxiliary, pre-release information is extracted
+from the dataset and stored separately from the graph: movie budget (adjusted
+and normalized as is movie gross), movie duration in minutes, genre (such as
+Action, Drama, Sci-Fi, etc.) and production countries. This information is also
+used by~\cite{Ghiassi2015} in their pre-release movie success prediction
+analysis.
+
+With such a model, we are able to represent the entire producing network from
+IMDb in a graph. However, because processing power is limited, we need to focus
+on those movies whose analysis will potentially produce more significant
+results.
+
+\subsection{Dataset Filtering}
+\label{sec:filter}
+Building a graph for the entire IMDb dataset is very costly and would include
+all kinds, shapes and sizes of movies. In order to get more significant results
+with minimum noise (i.e.\@ minimum outliers and irrelevant data), we prune some
+nodes and their edges. Moreover, it is important to improve the accuracy of our
+graph model in representing how movie production parties interact, even if
+information must be removed from the graph. Data is filtered before the
+experiments according to the following parameters.
+
+\begin{description}
+\item [Producer Current Activity.] According to~\cite{uzzi2005collaboration},
+once a producer has not worked for seven consecutive years, his/her node should
+be removed (we note that such person is likely to be retired or deceased).
+\item [Movie Release Date.] The movie industry only cemented itself with the
+establishment of the first Academy Awards
+(1929)~\citep{bakker2008entertainment}. At that time, sound technology for
+movies emerged, people begun to consider movie theaters as an entertainment
+option, and professional movie production took off. Considering this, we split
+the dataset in 1930: movies released in [1888--1929] are used to bootstrap the
+graph creation with starting nodes and edges, and movies released from 1930 on
+are considered for our analysis. We note that evaluating social metrics on a
+network with very few nodes and edges may produce distorted
+results~\citep{newman2010networks}.  Therefore, using early movies to create a
+starting graph generates a well defined network in order to properly analyze
+the movies from 1930 onwards.  Movies from 2014 on are disregarded because they
+were very recently added to the database, and therefore might contain
+unreliable (i.e.\@ unstable) key information for the analysis, such as ratings or
+gross.
+\item [Type of Movie.] We focus on feature-length movies (at least 40 minutes
+long\footnote{In order to be eligible for receiving an award from the Academy
+of Motion Picture Arts and Sciences (\url{http://www.oscars.org/}), a movie
+must fit their definition of ``feature-length'', then having 40 or more minutes
+of total runtime.}) produced for cinema. This includes documentaries, but
+leaves out TV productions and short movies as they present different goals and
+styles.  It is also debatable if their ratings and gross can be compared to
+results obtained in the cinema. Over 238,000 movie titles were collected,
+involving over 1.7 million different people, of which 246 thousand are
+producers.
+\item [Relevance.] We are not interested in evaluating amateur productions,
+but professionally produced movies (see
+Section~\ref{sec:foundamentals:dataset}). Therefore, only movies with at least
+1,000 \textit{votes} are considered. Thus, the dataset was reduced to 19,448
+titles (about 8.5\% of IMDb) and 39,808 producers\footnote{We have also
+analyzed a dataset for movies with at least 100 votes (65,493 titles
+representing 28\% of IMDb, and 92,128 producers). Not all network
+metrics were computable with such a large dataset, but we were able to identify
+similar results for those that finished processing.}.
+\item [Team Size and Connectivity.] Movies with just one producer (which does
+not characterize a team) or whose producers are not part of the network giant
+component are discarded. The final dataset contains 12,250 movie titles with
+31,696 producers\footnote{The final dataset is available here:
+\url{http://goo.gl/0BPffy}}, as collected in November, 2014.
+\end{description}
+
+\subsection{Movie Success Parameters}
+\label{sec:success}
+As discussed in Chapter~\ref{chapter:intro}, there is no single definition for
+movie success. Therefore, we have evaluated the data available at IMDb and
+decided to consider three different measures as \textit{success parameters}.
+First, \textit{economic success} is given by the gross income, which is
+directly connected with the revenue and represents how many people were
+interested in paying to watch the movie. Second, \textit{public acceptance} is
+given by the IMDb user ratings and indicates how well the title was received by
+the general public.  Finally, \textit{movie popularity} is given by the
+absolute number of votes the movie received and represents the number of people
+who have watched the movie and were interested in evaluating it.
+
+Figure~\ref{fig:scatter_success_params} illustrates the correlation between
+these three variables. Note that the relationship presented in
+Figure~\ref{fig:scatter_success_params}$(a)$ between \textit{economic success}
+and \textit{popularity} confirms the positive correlation found
+by~\cite{wasserman2015cross} for these parameters.
+Figure~\ref{fig:scatter_success_params}$(b)$ presents the relationship between
+movie's \textit{public acceptance} and \textit{popularity}. Note that this
+graph has a logarithm scale. Most movies have average
+\textit{public acceptance} levels paired with low \textit{popularity}, and
+movies in the higher spectrum of \textit{popularity} have an above average
+\textit{public acceptance}.  Figure~\ref{fig:scatter_success_params}$(c)$
+presents the relationship between movie's \textit{public acceptance} and
+\textit{economic success}. It clearly shows that movies with a higher
+\textit{economic success} tend to deviate more from the average in terms of
+\textit{public acceptance}.
+
+\begin{figure}[tb]\begin{center} %4.1
+\includegraphics[width=0.85\columnwidth]{../../images/scatter_success_params.pdf}
+\caption{\label{fig:scatter_success_params}Relationships between movie's
+success parameters}
+\end{center}\end{figure}
+
+Since movie \textit{popularity} is positively correlated with \textit{economic
+success}, and popular movies have \textit{public acceptance} values that
+deviate more from the average (as shown
+Figure~\ref{fig:scatter_success_params}$(a)$ and $(b)$), we conclude that all
+three graphs are in accordance to each other. Movies with a higher economic
+success draw more attention, and therefore have a more diverse pool of opinions
+and evaluations. This translates to more heterogeneous values of \textit{public
+acceptance}.
+
+Next, we discuss strategies for normalizing each of such success parameter.
+
+\subsubsection{Average Rating}
+The trust on the values for average rating increases for movies that received
+more ratings (more votes), because a small number of biased evaluations can
+significantly change the movie's overall evaluation. Very popular movies have
+dozens of thousands of votes, and thus the bias generated by unfair evaluations
+is reduced. Therefore, average ratings for popular movies cannot be directly
+compared to those of movies that received only a few thousand or even less
+evaluations. Hence, average ratings were normalized by the number of votes
+received on the same true Bayesian estimate~\cite{bolstad2013introduction} used
+by IMDb in its TOP 250 list\footnote{IMDb Top 250
+Movies: \url{http://www.imdb.com/chart/top}}, according to the following
+equation:
+
+\begin{equation}
+\textrm{Weighted Rating} = \left(\frac{v}{v+t_v}\right) \cdot R + \left(\frac{t_v}{v+t_v}\right) \cdot C,
+\label{eq:wrating}
+\end{equation}
+where for each movie, $R$ is the mean of its ratings, $v$ is the number of
+votes it received, $t_v$ is a threshold equal to the least amount of votes of a
+fully trustable rating, and $C$ is the mean vote across all movies. The value
+of $C$ is provided by IMDb\footnote{IMDb
+Charts:~\url{http://www.imdb.com/chart/top}} and was equal to $7.0$ at the time
+the dataset was collected (November, 2014). A value of $t_v=2,500$ was chosen
+in order to ensure log-normal rating distribution (as seen in
+Figure~\ref{fig:hist_success}$(c)$). This ensures that movies with few
+evaluations (and therefore less trustable mean ratings) have their mean ratings
+pushed towards the global mean vote, effectively compensating for the higher
+probability of the movie having a biased deviation from the mean that is not
+due to the movie itself. For instance, there are several obscure productions
+with only a few hundreds of evaluations that have a mean rating that is as high
+as the most widely acclaimed movies. However, its unlikely that these movies
+have the same level of public acceptance.
+
+\begin{figure}[tb]\begin{center}
+\includegraphics[width=0.85\columnwidth]{../../images/hist_success.pdf}
+\caption{\label{fig:hist_success}Histogram of movies per success parameter
+aggregated as the three performance groups.}
+\end{center}\end{figure}
+
+\subsubsection{Gross Income}
+Gross income information was only available for 70\% of movies (9,210
+instances). Also, the monetary values are usually given in the currency of the
+country that hosted the movie production, and is dated from shortly after the
+movie's release. To compare monetary values with minimal distortion, the values
+were normalized. Values for gross income and budget were converted to US
+Dollars using the Historical Currency Converter Web Service\footnote{Historical
+Currency Converter:~\url{http://currencies.apps.grandtrunk.net}}.
+
+Since the dataset contains movies produced in many different decades, US dollar
+gross values from distinct moments in history cannot be fairly compared due to
+inflation. Therefore, the amounts in US Dollars were subsequently corrected for
+inflation using the CPI Inflation Calculator\footnote{CPI Inflation
+Calculator:~\url{http://www.bls.gov/data/inflation\_calculator.htm}}, an online
+feature provided by the Bureau of Labor Statistics, in October 2014.
+
+The movies without a valid historical exchange record for US Dollars (only six
+instances) had their gross information discarded. Movies without gross
+information are not considered for analyses involving gross. Finally,
+Figure~\ref{fig:hist_success}$(a)$ shows the movies' distribution of gross
+income, which follows the shape of a double-normal distribution.
+
+\subsubsection{Number of Votes}
+Figure~\ref{fig:hist_success}$(b)$ shows the number of votes a movie
+receives follows a power law, spanning several orders of magnitude. For this
+reason, these numbers were logarithmically adjusted by following the methodology
+proposed by~\cite{ASI:ASI23213}. This adjustment is made because several
+regression models are impaired when predicting data that spans several
+orders of magnitude.
+
+\subsection{Dataset Characterization}
+We now present the distribution of the extracted success features from movies
+through decades. Figure~\ref{fig:boxplot_success}$(a)$ shows the histogram of
+movie productions throughout the decades. It clearly shows the number of movie
+productions exploded in the last decades (note that its y-axis is in
+log-scale). We also observe a few changes in the historical distributions of
+movie's success parameters.
+
+There have been more movies with inferior box office in recent years
+(Figure~\ref{fig:boxplot_success}$(b)$). We argue that, in the past, movie
+productions were more expensive to fund and few people could afford a
+commercial movie production.  Now, it is cheaper to produce a movie and to sell
+it to a specific (niche) audience. Such movies can accumulate a smaller gross
+but still be able to cover its production budget. 
+
+In recent decades, movies have more votes
+(Figure~\ref{fig:boxplot_success}$(c)$). Also regarding movie's ratings,
+Figure~\ref{fig:boxplot_success}$(d)$ shows clearly that older movies have
+significantly higher average ratings than recent movies. Ratings are also more
+heterogeneous: when compared to the mean value, their ratings are more
+dispersed than in previous decades.
+
+We argue that this phenomenon is not due strictly to movies produced in the
+past having a higher quality, but also to selection bias. People either choose
+a new movie to watch or an old classic with good references: there is little
+(or no) motivation to watch unimportant or unsuccessful movies from the past.
+It is expected that only good movies from the past are watched and voted on
+today.  Furthermore, the IMDb website started collecting ratings from movies in
+the nineties. Movies released before that have ratings that are subject to this
+selection bias. 
+
+\begin{figure}[tb]\begin{center}
+\includegraphics[width=0.85\columnwidth]{../../images/boxplot_success.pdf}
+\caption{\label{fig:boxplot_success}Movie productions and their success
+parameters through the decades.}
+\end{center}\end{figure}
+
+This selection bias also happens because people are constantly motivated by
+heavy ad campaigns to watch newer movies, even if they are unsure whether the
+movie is worth watching.
+
+\subsection{Movie Grouping by Performance}
+For better understanding and analyzing the different degrees of movie success,
+we scale the normalized values from the three success parameters (number of
+votes, gross income and average rating) in the $[0, 1]$ interval. Subsequently,
+we calculate the simple mean of (the scaled values of) their three success
+parameters. Then, we take the resulting value and divide the movies that were
+considered for the experiment by breaking the distribution into 10 slices (each
+slice contains movies whose average mean success falls into one specific
+range\footnote{We reaffirm that only movies that pass all constraints defined
+in Section~\ref{sec:filter} take part in this analysis.}). For example, slice
+0--10\%  contains the top 10\% most successful movies, while slice 10--20\%
+contains movies whose success parameter values fall between the
+10\textsuperscript{th} and 20\textsuperscript{th} percentile of the success
+distribution. Table~\ref{tab:success_groups} shows the number of movies and the
+total number of movies per slice as well. Overall, we aggregate the slices into
+three major groups: group $G_1$ with blockbusters, group $G_2$ with movies of
+moderate success, and group $G_3$ with movies of low success.
+
+\input{../../tables/tab_groups}
+
+Going back to Figure~\ref{fig:hist_success}, it shows the distribution of the
+number of movies with respect to the success parameters after normalization.
+Their distributions are drastically different among the tree groups, specially
+regarding gross (Figure~\ref{fig:hist_success}$(a)$) and number of votes
+(Figure~\ref{fig:hist_success}$(b)$). In Chapter~\ref{chapter:analysis}, we
+further discuss the different characteristics among these groups.

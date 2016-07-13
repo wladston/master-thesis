@@ -1,0 +1,92 @@
+\section{Methodology}
+\label{sec:method}
+Choosing a single split of train/test sets might produce poor experimental
+results, because the train and test sets could be selected in a biased
+way~\citep{mohri2012foundations}. To avoid this problem, we perform
+\textit{K-fold Cross Validation} with $K = 5$.  The selection of $K$ was made
+such that it effectively controls the bias while it generates large folds that
+are more heterogeneous. For each cross validation, the movies are randomly
+split into five distinct groups, and five train/test cycles are performed. Each
+time, one of the groups is chosen to be the test group and the other groups are
+used for training the regression model. In each train/test cycle, the
+coefficient of determination\footnote{Throughout this chapter, the coefficient
+of determination (denoted as \textbf{$R^2$}) is used to assess how well the
+different regression models are predicting movie success according to their
+given inputs.} is computed by evaluating the model using the respective test
+set. This gives five $R^2$ values for each run. We consider the mean of these
+values as the result of the cross-validation execution.
+
+For each evaluation, it is important to ensure that the special five folds were
+not randomized in a biased way. Hence, when evaluating a model, we take results
+from 30 different \textit{5-fold cross validation} executions. We then
+calculate the mean and confidence intervals ($\alpha$ = 95\%) from such runs as
+the model's final score.
+ 
+If the distribution of votes and gross are highly skewed, forming a power law 
+(few movies with most votes and gross, see Figure~\ref{fig:hist_success}), 
+there is a high probability that either no or an insufficient amount of 
+high-performing movies will be present in several randomized folds. Such skewness 
+might favor the formation of biased train/test sets. This could impair the model's 
+ability to recognize higher performing movies and thus compromise its accuracy.
+
+To account for this phenomenon, we attempted under-sampling the number of
+movies with lower levels of success in the training sets. However, following
+experimental evaluation showed this does \textit{not} improve regression
+accuracy.  Hence, we choose to generate \textit{balanced} train/test folds.
+Using \textit{balanced} folds, train and test sets of movies are grouped in a
+way that ensures groups have similar distributions of movies among each of the
+three performance groups ($G_1$, $G_2$ and $G_3$ as defined in
+Table~\ref{tab:success_groups}). Moreover, all train/test folds are still
+generated in a random fashion.
+
+Finally, Algorithm~\ref{algo:predictor} provides an overview of all major steps
+and processes involved in the experiments. Briefly, it shows all steps starting
+from the raw data all the way to a trained movie success prediction model and
+its performance.
+
+\begin{algorithm}[tb]
+ \SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+ \Input{Raw IMDb Movie Data}
+ \Output{Movie success prediction model}
+    $\mathbb{G} \leftarrow$ [~] \tcc*[r]{producers' graph}
+    movie\_map $\leftarrow$ [~] \tcc*[r]{movies with features}
+    $filter\_by\_votes(\mathbb{M}, minimum\_votes)$\;
+    $sort(\mathbb{M}, release\_date)$\; 
+    \ForEach{m $\in$ $\mathbb{M}$}{
+        $\mathbb{G}.update(\mathbb{P}m)$  \tcc*[r]{add movie producers}
+        \If{$any(\mathbb{P}m \cap \mathbb{G}.giant\_component)$}{
+            x $\leftarrow$ $m$.success\_parameters\;
+            f $\leftarrow$ calculate\_features$(m)$\;
+            movie\_map.add$(m, x, f)$\;
+        }
+    }
+    normalize\_features$(movie\_map)$\;
+    add\_product\_of\_features$(movie\_map)$\;
+    models $\leftarrow$ [~] 		\tcc*[r]{regression models}
+    \For(\tcc*[f]{30 runs}){$i\leftarrow 1$ \KwTo{} $30$}{
+        R2,model $\leftarrow$ ramdom\_cross\_validation$(movie\_map)$;
+        models.add$([R2, model])$;
+    }
+    return \{models.mean, models.confidenceInterval\}\;
+\caption{Movie Prediction Task}\label{algo:predictor}
+\end{algorithm}
+
+\input{../../tables/tab_test_sets}
+
+\subsection{Predictive Evaluation}
+\label{sub:predictive_evaluation}
+The methodology for evaluating the prediction model consists in 
+splitting the movies in three chronological groups: from 2008 to
+2013 (3,317 movies = 27\%), from 1995 to 2013 (9,775 movies = 52\%), and from
+1930 to 2013 (12,250 movies = 100\%). We use each group for
+training and testing the regression models for each of the three success
+parameters. Table~\ref{tab:test_sets} summarizes the three different experiment
+sets.
+
+To evaluate how the features that depend on team social characteristics add
+predictive power to the model, experimental trials are performed with the same
+set of movies $\mathbb{M}$, but using different sets of features. Specifically,
+we evaluate the regression model three times by considering: only the
+non-topological features, only the topological features and all features.
+Finally, we use the coefficient of determination~$R^2$ to assess how well the
+regression models are predicting movie success parameters.

@@ -1,0 +1,84 @@
+\section{Machine Learning and Regression Analysis}
+\label{sec:ml}
+Regression Analysis is a technique to estimate relationships among variables.
+Its goal is to build \textit{regression models} that exploit such relationships
+to accurately derive values for one or more output variables according to given
+input variables. This concept is the founding block for most predictive
+analysis techniques, including Machine Learning~\citep{murphy2012machine}.
+
+Machine Learning is the development of algorithms that learn and make
+predictions from data. Rather than relying on static instructions, Machine
+Learning algorithms use existing datasets to train \textit{regression models}
+that ultimately allow for accurate prediction and decision making. As a type of
+Regression Analysis, it involves evaluating target variables as functions of
+data features modeled as input parameters~\citep{murphy2012machine}. There are
+several regression techniques that can be used to accomplish such a goal,
+including \textit{linear} regression techniques, the simplest being Ordinary
+Least Squares (OLS). OLS consists in adjusting coefficients of a linear
+function of the input in order to minimize the square error of the model.
+
+However, there are characteristics that might cause models based on OLS to
+perform poorly. These include excess noise in the target variable, incorrect
+feature selection, inclusion of too many irrelevant features, presence of
+non-linear dependencies between the input features and the predicted variable,
+and presence of extreme outliers. To handle these cases, many different
+regression techniques were proposed, each having particular applications where
+it performs best.
+
+For instance, the Ridge Regression~\citep{hoerl1970ridge} is a variation of OLS
+to better handle the presence of outliers. It minimizes the sum of the square
+error, plus an extra term that brings the model to a more desirable state with
+the aid of a Tikhonov Matrix, using L2
+regularization~\citep{mohri2012foundations}. Support Vector Machines
+(SVM)~\citep{smola1997support} is yet another type of regression model
+indicated for recognizing non-linear relationships.
+
+Another alternative is using models based on Bayesian Inference, such as the
+Bayesian Ridge~\citep{mackay1992bayesian} that uses a probabilistic model.
+Therefore, instead of minimizing the error or square error, these models are
+iteratively adjusted to maximize the model's observed likehood or log-likehood.
+Such a behavior results in regression models that handle greater amounts of
+noise in the output variable~\citep{mohri2012foundations}.
+
+Even when choosing the most appropriate regression technique with respect to
+the data being analyzed, problems can still arise due to overfitting. This
+happens when the model is excessively adjusted to recognize the input data. It
+then performs really well for the training data but does not generalize to data
+not considered by the training~\citep{murphy2012machine}.
+
+To control overfitting and therefore produce a model that generalizes across
+diverse types of data, data is typically split into a \textit{train set} and a
+\textit{test set}. The train set adjusts the regression model to fit
+the training data, whereas the test set is never used to adjust the model. The
+test set is solely used for assessing how well the model generalizes to data it
+has not seen before~\citep{murphy2012machine}.
+
+However, doing a single train/test routine may result in biased outcomes due to
+the accidental choice of a train/test data split that does not generically and
+accurately represent the data. For this reason, the ideal method is not to
+perform a single train/test evaluation, but \textit{multiple} evaluations of
+the model using cross validation. In this case, data is split among $k$ folds
+(typically 5 to 10), and $k$ train/test splits are performed. Each time, $k-1$
+folds are used for training and the remaining fold for validation. The final
+performance of the model should be derived from the mean performance from all
+$k$ evaluations.~\citep{murphy2012machine}
+
+The $R^2$ measure is the standard to understand how well the model fits the
+target variable, i.e., how well the model can predict the target variable. It
+is the square of the correlation coefficient between the values predicted by
+the model and the real values. The $R^2$ measure is also known as the
+coefficient of determination, as it directly represents the total percentage of
+variation of the predicted variable that is explained by the model. An $R^2$
+value of zero means the model fits the target variable no better than the mean
+of the target variable, whereas an $R^2$ value of one means the model can
+perfectly explain all variation in the target variable.
+
+Most machine learning techniques require that all features are normalized in
+either the [0,1] interval or to have unit variance and zero mean. This is also
+true for Binary Features. These special types of features are defined after
+characteristics that can either be present or absent in the object being
+modeled. For instance, each movie in a set can either be associated with the
+genre ``Comedy'' or not. In this case, a Binary Feature can be used to input
+this information into regression models: a feature ``Genre:Comedy'' is defined,
+and it assumes the value $1$ if the movie is associated with the aforementioned
+Genre, and $0$ otherwise~\citep{murphy2012machine}.

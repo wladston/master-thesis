@@ -1,0 +1,229 @@
+\section{Results}
+\label{sec:results}
+In this chapter, we present an experimental evaluation for our prediction
+model. First, the prediction model is evaluated with three different groups of
+features (Section~\ref{sec:chronological}). The most and least successful
+movies are presented along with their team's key topological features
+(Section~\ref{sec:bestworst}). We then present the movies of different levels
+of success for which the predicted values had greatest and smallest prediction
+errors (Section~\ref{sec:hitsmisses}). Finally, we conclude this section by
+taking all results together and giving insights into ways of producing a
+blockbuster (Section~\ref{sec:an:final}).
+
+\subsection{Prediction Model Evaluation}
+\label{sec:chronological}
+Here, we evaluate the three instances of regression models for predicting each
+of the three success parameters based on each chronological test set
+(Table~\ref{tab:test_sets}). Table~\ref{tab:years_results} presents $R^2$
+measures for each model instance. The model that only uses non-topological
+features is taken as baseline because it only uses features already explored by
+previous works (e.g., genre, runtime, and budget).
+
+\input{../../tables/tab_years_results}
+
+The results show considering a wider range of years in the dataset
+\textit{decreases} the effectiveness of the prediction model. We speculate that
+it happens because the organization of movie producing teams is constantly
+evolving. Hence, forms of organization that were related to best results in one
+chronological context might not generalize across all history. As an evidence,
+Figure~\ref{fig:features_dist_top} showed a rise of the clustering coefficient
+until late 1940's, then a decrease until the mid-1960's, with a very slow
+growth until 2013 (Section~\ref{sec:feature_char}). This result strengthens the
+importance of splitting the data into different profiles and analysing then
+separately.
+
+Also, the model performs very differently when predicting each success
+parameter: it performs better for number of votes, a little worse for gross
+($R^2$ values are $19.42\%$ smaller than the best model's) and worse still for
+normalized ratings ($R^2$ values are $49.46\%$ smaller than the best model's).
+Here, we argue that the absolute number of votes a movie receives is the less
+noisy variable out of the three.  In other words, more external factors
+interfere with gross and ratings. For instance, gross is directly connected to
+the audience that \textit{pays} to watch the movie in theaters shortly after the
+release. That can be affected by the movie's distribution efficiency and
+advertising reach (and the spread of movie piracy). Ratings way be heavily
+affected by the performance of a specific actor and the cultural/emotional
+response from the audience. The absolute number of votes measures the public
+\textit{attention} captured by the movie, since a person may watch and rate it
+without necessarily having to pay for it or like it. Finally, such a broad
+range of results highlight (once more) that movie success prediction is a
+difficult task. It is especially hard when assessing gross and ratings due to
+the morphing complexity of production team organization in the movie industry.
+
+Nonetheless, for all cases, the prediction model that considers topological
+features (along with past success, past experience and movie characteristics)
+outperforms the others. This makes clear topological features do have
+predictive power over movie success parameters. Indeed, we see that
+topological features \textit{alone} could still be used to train movie success
+regression models with better results than pure guesswork.
+
+\begin{figure}[H]\begin{center}
+\includegraphics[width=0.9\columnwidth]{../../images/pred_final2.pdf}
+\caption{\label{fig:pred_evaluation}Performance comparison of regression
+models without (baseline) and with (test) topological features, using the same
+movie train/test split. Green bars for when test is better than baseline, and
+red bars otherwise.}
+\end{center}\end{figure}
+
+\subsubsection{Topological Features Influence}
+In order to complement our discussion, Figure~\ref{fig:pred_evaluation} is a
+graphic comparison between using only non-topological features (baseline) and
+using all features (test). This evaluation considers a random sample of 29
+movies\footnote{This is just an \textbf{illustrative} sample of how our predictor
+compares to the baseline. The sample has only 29 movies for clarity reasons.}.
+Both models were trained and tested with the chronological dataset
+[2008--2013]–which produced the best results (Section~\ref{sec:chronological}).
+The $y$ axis is scaled to the $[0,1]$ interval. In order to improve
+readability, movies in the test set are ordered by their predicted
+variable magnitude (ground truth), i.e.\@ the movie's actual
+\textit{$\log\kern\nulldelimiterspace(\textrm{number of votes})$}.
+
+This extra analysis emphasizes the relevance of considering network topology. 
+In fact, we may claim that it ushers the development of
+more sophisticated prediction models in which the \textit{topology} of teams is
+also considered. Moreover, new tools could unveil new knowledge on how precisely the
+network topology impacts team success in broader contexts.
+
+\subsubsection{``Super''-Regressor}
+In this final evaluation, we study how including success parameters into the
+set of 23 features (Table~\ref{tab:selected_features}) can improve prediction
+accuracy.  Specifically, given one success parameter, we include the other two
+in the feature set. For instance, this would be helpful when having two
+parameters already computed (even if partially) and trying to predict the third
+one.  Considering that we want to predict the number of votes, using all
+selected features plus movie ratings and gross gives a Bayesian Ridge
+regression with $R^2 = 0.670$, confidence interval~$= 0.0007$ and
+$\alpha=95\%$. Using the same strategy, we can predict gross with $R^2 =
+0.573$, confidence interval~$= 0.0013$, and $\alpha=95\%$. For ratings, the
+results are $R^2 = 0.356$, confidence interval~$= 0.0013$, and $\alpha=95\%$. A
+side by side comparison of the best performing model against the one with
+these extra features is shown Table~\ref{tab:years_results_super}. Using just
+one extra feature yields results that are worse when two extra features
+are used. However, even when just one extra feature is used, the results are
+still better when compared to the best perming model that does not use
+pre-release information.  Finally, these results hint an even better prediction
+model might be obtained for long-term success of movies considering their
+initial success.
+
+\input{../../tables/tab_years_results_super}
+
+\subsection{Best and Worst Movies}\label{sec:bestworst}
+For better illustrating the analysis, we present the best and worst movies
+according to the normalized mean of the success factors.
+Tables~\ref{tab:worst_movies}~and~\ref{tab:best_movies} respectively show the
+movies with the highest and lowest scores, including examples of low-scoring
+popular movies and high-scoring unpopular movies.
+
+\input{../../tables/tab_worst_movies}
+\input{../../tables/tab_best_movies}
+
+These results confirm our findings: for bad movies, all values of team harmonic
+mean of clustering coefficient are below $0.280$, whereas good movies obtained
+higher values. Degree and team size values for movies are comparable across the
+two tables. However, as seen in
+Sections~\ref{sec:featureselection}~and~\ref{sec:future}, these metrics play a
+very important part in the regression model if combined with other features.
+This might indicate that these features provide predictive power once combined
+with other features.
+
+\subsection{Prediction Hits and Misses}
+\label{sec:hitsmisses}
+In this section, we dissect the prediction results by calculating the
+difference between predicted values and real values of success parameters for
+each movie. Specifically, we predict movie's success parameters 30 different
+times (using the same methodology previously presented), and store the
+predicted results. We use these predictions to compute the mean prediction
+error and confidence interval associated with success parameters for each
+movie.
+
+By using these values, we focus our analysis on the movies in which our model
+predicts success parameters with highest and lowest errors, i.e., our
+prediction misses and hits. To provide a throughout overview of such movies, we
+present a separate table for displaying errors from prediction results in each
+of the three success parameters. Each table is also divided in two parts, one
+shows nine movies with high prediction error (misses), and the other shows nine
+movies with low prediction errors (hits). Also, in each table, rather than
+showing the movies having the overall highest and lowest errors, we select nine
+movies having success values from distinct ranges: $0$--$0.2$, $0.2$--$0.3$,
+$0.3$--$0.4$ and so on until the range $0.9$--$1.0$. Considering all movies
+that would fit the range, the movie having the highest (or lowest) prediction
+error is displayed on the table. In other words, the movies in these tables
+were selected by picking the highest (or lowest) prediction error for the
+movies having different ranges of the success parameter being observed in the
+table.
+
+According to this organization,
+Tables~\ref{tab:errors_pred_gross},~\ref{tab:errors_pred_votes}
+and~\ref{tab:errors_pred_rating} show the predictor's hits and misses for
+gross, number of votes and ratings. All values (but degree) are normalized for
+clarity. Each table is ordered by the level of success of the movie according
+to the table's success parameter (i.e., Table~\ref{tab:errors_pred_gross}
+ordered by gross, Table~\ref{tab:errors_pred_votes} ordered by vote, and
+Table~\ref{tab:errors_pred_rating} by rating), from the weakest to the
+strongest. Two topological characteristics are also highlighted: clustering and degree
+(which could explain some of the hit and misses, Section~\ref{sec:featureselection}).
+
+We now take a closer look at some of those movies starting with \textit{Erased}
+(2012) in Table~\ref{tab:errors_pred_gross}.  It had an estimated budget of 12
+million euros and was produced by an experienced team of producers. Such
+features lead our predictor to assign a high gross value to it.  However, the
+movie gross extracted from IMDb database is very low (only 147 British pounds),
+resulting in a high prediction error. Hence, either it is a really unexpected
+outcome, or there is a typo in the gross data.
+
+On the other hand, consider the movie \textit{Hubble 3D}
+(2010), for which the model heavily under-predicted the gross income. Its
+producers had very little past experience or past success, and they were very
+poorly connected to other producers in the network. This indicated the movie would
+be a good candidate for a flop. However, it was one of the first feature-length IMAX
+productions, whose work was overseen by IMAX itself. With such innovative
+aspects, it drew masses to movie theaters.
+
+\input{../../tables/tab_errors_pred_gross}
+\input{../../tables/tab_errors_pred_votes}
+\input{../../tables/tab_errors_pred_rating}
+
+Now, consider the movie \textit{Ice Age: Dawn of the Dinosaurs} (2009) as one
+big hit. Even though it has a very high clustering coefficient, the model still
+predicted its gross almost to the point (error of $+.001$). Such result shows
+its team's past success (in gross) was high enough to counterbalance the team's
+high heterogeneity. Likewise, we note that among the hits, the highest errors
+are within the low performance group ($G_3$ with \textit{Emergo} and
+\textit{London River}).
+
+Table~\ref{tab:errors_pred_votes} presents some interesting results while
+predicting movie popularity (number of votes). For instance, the movie
+\textit{Intouchables} (2011) was produced in France by an unexperienced
+producing team whose past productions were unpopular or obscure movies. None of
+the producers had ever produced a single movie that had reached such a mass
+success. However, this movie has a widely acclaimed high-quality storyline. So,
+even though it had a relatively low gross, barely covering its budget, the
+movie name spread after its release, reaching a wide level of popularity.
+
+For the hits on this table, we note the high performance group has only movies
+from big franchises: \textit{Fast Five}, \textit{X-Men: First Class} and
+\textit{The Dark Knight}. Given that franchises tend to keep their producing
+teams fairly large and well connected, it also provides more interesting
+team-based features for the predictor to hit the mark.
+
+Table~\ref{tab:errors_pred_rating} presents the predictor hits and misses for
+ratings, whose errors are more evident than the previous parameters. The main
+reason here could be cultural factors. For instance, movies like \textit{Jonas
+Brothers} (2009) and \textit{Hanna Montana \& Miley Cyrus} (2008) which are
+about teenage pop singers, received extremely low ratings. Nonetheless, these
+movies were produced by experienced and well connected teams with the support
+of a huge producing company (Walt Disney Pictures), have extremely popular
+actors/singers and made significant box offices. It is possible that the
+ratings came from the kids' parents and not the kids themselves, who would
+probably rate them as an award quality movie. Such cultural aspects are very
+hard (if not impossible) to detect from movie topology or other concrete movie
+features considered here.
+
+The hits on Table~\ref{errors_pred_ratings} are probably the hardest to
+explain. Nonetheless, as for the misses, we postulate the cultural aspects
+involved in these movies could also explain such results. Moreover, the
+profiles of the three top performance movies are completely different:
+\textit{No one Killed Jessica} is an India-produced crime-drama-thriller;
+\textit{Gangs of Wasseypur} is an R-rated Indian 320-minute movie featured at
+Cannes Film Festival; and \textit{The Dark Knight Rises} ends Christopher
+Nolan's Batman trilogy.

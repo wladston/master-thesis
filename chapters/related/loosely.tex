@@ -1,0 +1,80 @@
+\section{General Research on Team Performance Analysis and Social Network
+Analysis}
+\label{sec:loosely}
+\cite{newman2001structure} was one of the first to explore metrics from large
+collaboration networks. He demonstrated how to construct a social network from
+bibliographic data and how to extract interesting characteristics from the
+social graph by using complex networks metrics. He showed that different
+scientific communities form small-world networks and are highly clustered, and
+proposed a method for estimating tie strength. The technique used in this
+thesis to extract a social network from collaboration data closely follows
+Newman's work.
+
+After the foundations for analytically extracting characteristics from social
+networks, and with the wider availability of social network data and processing
+power, this research area expanded across many academic disciplines, inspiring
+innovative work.~\cite{lutter2013there} used the IMDb dataset and social
+network analysis to explore gender inequality by tracking differences between
+social features from actors and actresses. He found some network metrics are
+link to better chances of career advancement, and that women are more likely to
+drop out of their careers in comparison to men.
+
+In another interesting application of social network
+analysis,~\cite{wasserman2015cross} also used IMDb movie data for estimating
+the relevance of a movie according to the network of cross references movies
+received. They considered the inclusion in the US Library of Congress National
+Film Registry as the ground truth for higher significance, and the
+contributions are more accurate in predicting whether a movie is highly
+relevant than the combined opinion of movie experts. On the other hand, we
+examine movie success in a broader context that includes a combination of
+popularity, financial success and public acceptance.
+
+Studies in different social contexts try to understand how people work together
+to better achieve their goals.~\cite{stokols2008} explore the ``Science of team
+science'', focusing on the processes by which scientific teams organize and
+conduct their work. Specifically, they explore how teams connect and
+collaborate in order to achieve breakthroughs that would not be attainable by
+either individual or simple additive efforts.
+
+Likewise, others identify correlations between social characteristics and team
+performance.~\cite{grund2012network} performed social network analysis in
+football teams and found that network characteristics in the graph that models
+the way players pass the ball is related to team winning odds. Unlike those
+work, here we focus on the social characteristics of teams in relation to their
+connections external to the team, instead of team's internal links.
+
+Although there is a vast pool of previous work connecting social structure and
+productivity, few of them investigate social features in the context of the
+team formation problem. Moreover, the team formation problem is well
+established and concerns strategies and algorithms for efficiently forming
+teams in the best possible way. Many of previous work on this problem focus on
+efficiently selecting elements with different skill sets in order to form
+multi-functional teams.
+
+For example,~\cite{anagnostopoulos2012online} present a technique for
+efficiently forming teams with a minimum set of combined skills. They also use
+the IMDb dataset to gather sample data to an emulated problem in which teams
+need to be formed from directors with a minimum combined skill set. Also, the
+genres of movies they have previously acted serve as the skill.
+
+\cite{tseng2004novel} also provide techniques for forming teams with a best
+possible multiple skillset.~\cite{wi2009team} form teams to work on given
+projects by matching nodes that have the specific knowledge related to the
+keywords present in the project's description.  Deterministic team formation
+extends even to autonomous robots:~\cite{GunnA15} present techniques for
+autonomous robots (working in disaster zones) to dynamically form teams to
+better perform the task of locating humans in need of rescue.
+
+Differently from these works, we contribute to the team formation problem not
+by efficiently finding elements to assemble a team that must satisfy a given
+restriction, but by identifying \textit{social patterns} present in teams that
+perform better in the context of producing successful movies. Moreover, other
+approaches on team formation tackle it as an optimization problem by grouping
+elements in order to most harmonically distribute the different abilities
+across multifunctional teams~\citep{anagnostopoulos2012online}. Other studies
+explore the presence of elements with special characteristics in the team to
+understand its success. For instance,~\cite{elberse2007power} studies the
+impact of extremely famous actors in movie teams. We complement such prior
+studies by focusing in accessing the effect of the social arrangement of the
+agents in the network, rather than the effect of individual characteristics of
+team members.
